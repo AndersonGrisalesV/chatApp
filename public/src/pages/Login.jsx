@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 import styled from "styled-components";
@@ -22,6 +22,12 @@ const Login = () => {
     draggable: true,
     theme: "dark",
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("chat-app-user")) {
+      navigate("/");
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -79,7 +85,7 @@ const Login = () => {
             onChange={(e) => handleChange(e)}
           />
 
-          <button type="submit">Login In</button>
+          <button type="submit">Login</button>
           <span>
             Don't have an account ? <Link to="/register">Register</Link>
           </span>
