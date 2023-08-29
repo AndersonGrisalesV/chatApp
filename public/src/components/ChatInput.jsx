@@ -4,7 +4,7 @@ import Picker from "emoji-picker-react";
 import { IoMdSend } from "react-icons/io";
 import { BsEmojiSmileFill } from "react-icons/bs";
 
-const ChatInput = () => {
+const ChatInput = ({ handleSendMsg }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [msg, setMsg] = useState("");
 
@@ -18,6 +18,14 @@ const ChatInput = () => {
     setMsg(message);
   };
 
+  const sendChat = (event) => {
+    event.preventDefault();
+    if (msg.length > 0) {
+      handleSendMsg(msg);
+      setMsg("");
+    }
+  };
+
   return (
     <Container>
       <div className="button-container">
@@ -26,7 +34,7 @@ const ChatInput = () => {
           {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
       </div>
-      <form className="input-container">
+      <form className="input-container" onSubmit={(event) => sendChat(event)}>
         <input
           type="text"
           placeholder="type your message here"
@@ -65,25 +73,32 @@ const Container = styled.div`
       }
       .EmojiPickerReact {
         position: absolute;
-        top: -350px;
+        top: -474px;
         background-color: #080420;
         box-shadow: 0 5px 10px #9a86f3;
         border-color: #9a86f3;
-        .emoji-scroll-wrapper::-webkit-scrollbar {
+        .epr-body::-webkit-scrollbar {
           background-color: #080420;
           width: 5px;
           &-thumb {
             background-color: #9a86f3;
           }
         }
-        .emoji-categories {
+        .epr-category-nav {
           button {
-            filter: contrast(0);
+            filter: contrast(-2);
           }
         }
-        .emoji-search {
+        .epr-search {
           background-color: transparent;
           border-color: #9a86f3;
+        }
+        .epr-emoji-category {
+          background-color: transparent;
+          div {
+            color: #fff;
+            background-color: #080420;
+          }
         }
         .emoji-group:before {
           background-color: #080420;
